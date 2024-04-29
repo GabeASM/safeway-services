@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/safeway-msvc/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/safeway-msvc/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/safeway-msvc",
+  "projects": {
+    "safeway-msvc": {
+      "type": "application",
+      "root": "apps/safeway-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/safeway-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/safeway-msvc/tsconfig.app.json"
+      }
+    },
+    "users-msvc": {
+      "type": "application",
+      "root": "apps/users-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/users-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users-msvc/tsconfig.app.json"
+      }
+    },
+    "eventmanager-msvc": {
+      "type": "application",
+      "root": "apps/eventmanager-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/eventmanager-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/eventmanager-msvc/tsconfig.app.json"
+      }
+    },
+    "eventmonitor-msvc": {
+      "type": "application",
+      "root": "apps/eventmonitor-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/eventmonitor-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/eventmonitor-msvc/tsconfig.app.json"
+      }
+    },
+    "noti-msvc": {
+      "type": "application",
+      "root": "apps/noti-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/noti-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/noti-msvc/tsconfig.app.json"
+      }
+    },
+    "admin-msvc": {
+      "type": "application",
+      "root": "apps/admin-msvc",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin-msvc/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin-msvc/tsconfig.app.json"
+      }
+    }
+  }
+}
