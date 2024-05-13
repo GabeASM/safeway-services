@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { EventmanagerMsvcController } from './eventmanager-msvc.controller';
-import { EventmanagerMsvcService } from './eventmanager-msvc.service';
+
+import { ManagerModule } from './manager/manager.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [],
-  controllers: [EventmanagerMsvcController],
-  providers: [EventmanagerMsvcService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'postgres14-safeway-eventos',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres-eventos-atenea',
+      database: 'safeway_events',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    ManagerModule],
 })
-export class EventmanagerMsvcModule {}
+export class EventmanagerMsvcModule { }

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: dockerfile-gateway
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - safeway-test
+
+  eventos:
+    build:
+      context: .
+      dockerfile: dockerfile-events
+    container_name: eventos
+    networks:
+      - safeway-test
+
+  postgresql14:
+    image: postgres:14
+    container_name: postgres14-safeway-eventos
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres-eventos-atenea'
+      POSTGRES_DB: 'safeway_events'
+    networks:
+      - safeway-test
+
+networks:
+  safeway-test:
+    driver: bridge
