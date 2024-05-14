@@ -10,8 +10,10 @@ export class Event {
     category: string
     @Column()
     description: string
-    @Column()
-    latidude: number
-    @Column()
-    longitude: number
+    
+    @Column({ type: 'double precision' })
+    latitude: number;
+
+    @Column({ type: 'double precision' })
+    longitude: number;
 }

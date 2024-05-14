@@ -12,7 +12,7 @@ export class EventmsvcService {
         return this.eventClient.send({cmd: 'new_event'}, event);
     }
     async getAllEvents() {
-        return this.eventClient.send({ cmd: 'getEvents' }, {});
+        return this.eventClient.send({ cmd: 'get_events' }, {});
     }
     async hello(){
         return this.eventClient.send({cmd: 'hello-event'}, {})

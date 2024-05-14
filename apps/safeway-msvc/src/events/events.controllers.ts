@@ -17,7 +17,7 @@ export class EventmsvcController {
         return this.eventmsvc.hello()
     }
 
-    @Get()
+    @Get('/all')
     getAllEvents() {
         return this.eventmsvc.getAllEvents()
     }

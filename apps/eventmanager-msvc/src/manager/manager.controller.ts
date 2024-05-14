@@ -15,4 +15,9 @@ export class EventController {
   getHello(): string {
     return this.eventService.getHello();
   }
+  
+  @MessagePattern({cmd : 'get_events'})
+  getAllEvents(){
+    return this.eventService.getAllEvents();
+  }
 }
