@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/createevent.dto';
 import { Event } from './event.entity';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class EventeManagerService {
 
-    constructor(@InjectRepository(Event) private readonly eventRepository : Repository<Event>) { }
+    constructor(@InjectRepository(Event) private readonly eventRepository : Repository<Event> ,@Inject('USER_SERVICE') private userClient: ClientProxy ) { }
 
     getHello(): string {
         return 'Hello World!';
@@ -21,5 +22,8 @@ export class EventeManagerService {
 
     async getAllEvents(){
         return this.eventRepository.find()
+    }
+    async helloFromUsers(){
+        return this.userClient.send({cmd: 'hello'}, {})
     }
 }

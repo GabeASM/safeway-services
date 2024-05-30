@@ -16,6 +16,12 @@ export class EventController {
     return this.eventService.getHello();
   }
   
+  @MessagePattern({cmd :'hello-users'})
+  getHelloFromUsers() {
+    return this.eventService.helloFromUsers();
+  }
+
+
   @MessagePattern({cmd : 'get_events'})
   getAllEvents(){
     return this.eventService.getAllEvents();

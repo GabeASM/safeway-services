@@ -18,4 +18,8 @@ export class EventmsvcService {
         return this.eventClient.send({cmd: 'hello-event'}, {})
     }
 
+    async helloUsers(){
+        return this.eventClient.send({cmd : 'hello-users'}, {})
+    }
+
 }

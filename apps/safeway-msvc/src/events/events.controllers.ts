@@ -17,6 +17,11 @@ export class EventmsvcController {
         return this.eventmsvc.hello()
     }
 
+    @Get('/saludo-usuarios')
+    helloFromUsers(){
+        return this.eventmsvc.helloUsers()
+    }
+
     @Get('/all')
     getAllEvents() {
         return this.eventmsvc.getAllEvents()
