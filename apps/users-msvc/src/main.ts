@@ -1,19 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { UsermanagerModule } from './usermanager/usermanager.module';
+import { UsersMsvcModule } from './users-msvc.module'; // Asegúrate de importar el módulo correcto
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    UsermanagerModule,
+    UsersMsvcModule,
     {
       transport: Transport.TCP,
       options: {
-        host : 'usuarios',
+        host: 'usuarios',
         port: 3001,
-        
-      }
+      },
     },
   );
   await app.listen();
 }
-bootstrap();  
+bootstrap();

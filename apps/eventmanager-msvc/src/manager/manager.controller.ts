@@ -5,25 +5,25 @@ import { CreateEventDto } from './dto/createevent.dto';
 
 @Controller('events')
 export class EventController {
-  constructor(private readonly eventService: EventeManagerService ) {}
+  constructor(private readonly eventService: EventeManagerService) { }
 
-  @MessagePattern({cmd :'new_event'})
-  createEvent(@Body() event : CreateEventDto) {
+  @MessagePattern({ cmd: 'new_event' })
+  createEvent(@Body() event: CreateEventDto) {
     return this.eventService.createEvent(event)
   }
-  @MessagePattern({cmd :'hello-event'})
+  @MessagePattern({ cmd: 'hello-event' })
   getHello(): string {
     return this.eventService.getHello();
   }
-  
-  @MessagePattern({cmd :'hello-users'})
+
+  @MessagePattern({ cmd: 'hello-users' })
   getHelloFromUsers() {
     return this.eventService.helloFromUsers();
   }
 
 
-  @MessagePattern({cmd : 'get_events'})
-  getAllEvents(){
+  @MessagePattern({ cmd: 'get_events' })
+  getAllEvents() {
     return this.eventService.getAllEvents();
   }
 }

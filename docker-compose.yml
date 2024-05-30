@@ -27,7 +27,7 @@ services:
     networks:
       - safeway-test
 
-  postgresql14:
+  postgresql14-eventos:
     image: postgres:14
     container_name: postgres14-safeway-eventos
     ports:
@@ -38,6 +38,19 @@ services:
       POSTGRES_DB: 'safeway_events'
     networks:
       - safeway-test
+
+  postgresql14-usuarios:
+    image: postgres:14
+    container_name: postgres14-safeway-usuarios
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres-usuarios-ares'
+      POSTGRES_DB: 'safeway_users'
+    networks:
+      - safeway-test
+
 
 networks:
   safeway-test:

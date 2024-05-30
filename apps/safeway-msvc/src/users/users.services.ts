@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { CreateUser } from './user.dto';
 
 
 @Injectable()
@@ -10,4 +11,7 @@ export class UsermsvcService {
         return this.userClient.send({cmd: 'hello'}, {})
     }
 
+    async createUser(newUser : CreateUser){
+        return this.userClient.send({cmd: 'new_user'} , newUser)
+    }
 }

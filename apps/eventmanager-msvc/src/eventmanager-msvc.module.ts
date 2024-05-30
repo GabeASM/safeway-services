@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-
 import { ManagerModule } from './manager/manager.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
