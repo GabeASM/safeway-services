@@ -14,4 +14,8 @@ export class UsermsvcService {
     async createUser(newUser : CreateUser){
         return this.userClient.send({cmd: 'new_user'} , newUser)
     }
+    
+    async getUsers(){
+        return this.userClient.send({cmd: 'get_users'} ,{})
+    }
 }

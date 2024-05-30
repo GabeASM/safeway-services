@@ -16,4 +16,9 @@ export class UsermsvcController {
     createUser(@Body() newUser : CreateUser){
         return this.usermsvc.createUser(newUser)
     }
+
+    @Get('/users')
+    getUsers(){
+        return this,this.usermsvc.getUsers()
+    }
 }
