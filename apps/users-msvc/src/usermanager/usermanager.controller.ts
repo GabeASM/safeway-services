@@ -23,4 +23,9 @@ export class UserManagerController{
     getAllUsers(){
         return this.userSerivce.getAllUsers()
     }
+
+    @MessagePattern({cmd: 'check_user_login'})
+    checkUserLogin(@Body() usermail : {mail: string}){
+        return this.userSerivce.findUserByMail(usermail.mail)
+    }
 }

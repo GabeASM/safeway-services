@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -21,5 +21,14 @@ export class UserService {
 
     async getAllUsers(){
         return this.userRepository.find()
+    }
+    async findUserByMail(mail: string){
+     const user = await this.userRepository.findOne({where: {
+        mail 
+     }})
+    
+     if(!user) throw new HttpException('USER_NOT_FOUND' ,404)
+ 
+     return user
     }
 }
