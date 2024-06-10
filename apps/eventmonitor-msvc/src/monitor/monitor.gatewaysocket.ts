@@ -23,9 +23,11 @@ import { MonitorService } from './monitor.service';
     @WebSocketServer() 
     server: Server;
   
+    clientIdSocket : string  
 
     handleConnection(client: Socket, ...args: any[]) {
       console.log(`Client connected: ${client.id}`);
+      this.clientIdSocket = client.id
     }
   
     handleDisconnect(client: Socket) {
@@ -33,10 +35,21 @@ import { MonitorService } from './monitor.service';
     }
   
     @SubscribeMessage('sendLocation')
-    handleLocation(@MessageBody() data: { latitude: number; longitude: number }): void {
-      console.log('Received location data:', data);
+    async handleLocation(client: Socket, @MessageBody() userPosition: { latitude: number; longitude: number } , )  {
+      //console.log('Received location data:', userPosition);
+      const clientId = this.clientIdSocket
+      //console.log(clientId)
+      
+      const notifications = await this.monitorService.sendEventsToNotiMsvc(userPosition , this.clientIdSocket)
+
+      if (!notifications){
+        this.server.to(clientId).emit('notifications', { message: notifications });
+      }
+
+      // console.log('notificaciones recibidas y listas para enviar al telefono -> ', notifications )
       
 
+      this.server.to(clientId).emit('notifications', { message: notifications });
     }
   }
   

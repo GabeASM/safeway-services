@@ -8,7 +8,7 @@ export class EventmsvcController {
 
     constructor(private readonly eventmsvc: EventmsvcService) { }
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post()
     createEvent(@Body() createEvent: CreateEventDto) {
         return this.eventmsvc.createEvent(createEvent)

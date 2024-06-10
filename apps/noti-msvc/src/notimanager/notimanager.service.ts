@@ -10,9 +10,11 @@ export class NotimanagerService {
     constructor(@InjectRepository(NotificacionEntity) private readonly notificationRepository : Repository<NotificacionEntity>){}
 
 
-    async createNotification(createNoti : CreateNoti){
-        const newNotification = this.notificationRepository.create(createNoti)
+    async createNotification(createNotification : []){
+        const newNotification = this.notificationRepository.create(createNotification)
         const notiSaved = await this.notificationRepository.save(newNotification)
         return notiSaved
     }
+
+    
 }

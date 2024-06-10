@@ -16,4 +16,7 @@ export class Event {
 
     @Column({ type: 'double precision' })
     longitude: number;
+
+    @Column({ type: 'date', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
 }

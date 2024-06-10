@@ -30,6 +30,6 @@ export class EventController {
 
   @MessagePattern({cmd : 'get_events_by_position'})
   getNearbyEvents(@Body() userPosition : UserPosition){
-    return this.eventService.findNearbyEvents(userPosition)
+    return this.eventService.findNearbyEvents2(userPosition)
   }
 }

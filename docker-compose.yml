@@ -37,6 +37,14 @@ services:
     networks:
       - safeway-test
 
+  notificaciones:
+    build: 
+      context: .
+      dockerfile: dockerfile-notification
+    container_name: notificaciones
+    networks:
+      - safeway-test
+
   postgresql14-eventos:
     image: postgres:14
     container_name: postgres14-safeway-eventos
@@ -61,6 +69,17 @@ services:
     networks:
       - safeway-test
 
+  postgresql14-notificaciones:
+    image: postgres:14
+    container_name: postgres14-safeway-notificaciones
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres-notificaciones-poseidon'
+      POSTGRES_DB: 'safeway_noti'
+    networks:
+      - safeway-test
 
 networks:
   safeway-test:
