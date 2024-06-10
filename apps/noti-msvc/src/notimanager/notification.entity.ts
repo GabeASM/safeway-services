@@ -1,6 +1,6 @@
 import { Column, PrimaryGeneratedColumn } from "typeorm"
 
-export class Notificacion{
+export class NotificacionEntity{
     @PrimaryGeneratedColumn()
     id : number 
 
