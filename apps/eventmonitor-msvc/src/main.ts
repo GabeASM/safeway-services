@@ -3,6 +3,6 @@ import { EventmonitorMsvcModule } from './eventmonitor-msvc.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(EventmonitorMsvcModule);
-  await app.listen(3000);
+  await app.listen(8081);
 }
 bootstrap();

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/createevent.dto';
 import { Event } from './event.entity';
 import { ClientProxy } from '@nestjs/microservices';
+import { UserPosition } from './dto/userposition.dto';
 
 @Injectable()
 export class EventeManagerService {
@@ -25,5 +26,19 @@ export class EventeManagerService {
     }
     async helloFromUsers(){
         return this.userClient.send({cmd: 'hello'}, {})
+    }
+
+    async findNearbyEvents(userPosition : UserPosition){
+
+        const events = await this.eventRepository.query(`
+            SELECT *, 
+              (6371 * acos(cos(radians($1)) * cos(radians(latitude)) * cos(radians(longitude) - radians($2)) + sin(radians($1)) * sin(radians(latitude)))) AS distance 
+            FROM event
+            HAVING distance < $3
+            ORDER BY distance
+            LIMIT 10
+          `, [userPosition.latitude, userPosition.longitude, userPosition.radius]);
+      
+          return events;
     }
 }

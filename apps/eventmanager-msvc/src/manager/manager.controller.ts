@@ -2,6 +2,7 @@ import { Body, Controller, Get } from '@nestjs/common';
 import { EventeManagerService } from './manager.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateEventDto } from './dto/createevent.dto';
+import { UserPosition } from './dto/userposition.dto';
 
 @Controller('events')
 export class EventController {
@@ -25,5 +26,10 @@ export class EventController {
   @MessagePattern({ cmd: 'get_events' })
   getAllEvents() {
     return this.eventService.getAllEvents();
+  }
+
+  @MessagePattern({cmd : 'get_events_by_position'})
+  getNearbyEvents(@Body() userPosition : UserPosition){
+    return this.eventService.findNearbyEvents(userPosition)
   }
 }
