@@ -81,6 +81,22 @@ services:
     networks:
       - safeway-test
 
+  minio:
+    image: minio/minio
+    container_name: minio-safeway
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password123
+    volumes:
+      - ${MINIO_DATA_PATH}:/data
+      - ${MINIO_CONFIG_PATH}:/root/.minio
+    command: server /data --console-address ":9001"
+    networks:
+      - safeway-test
+
 networks:
   safeway-test:
     driver: bridge
