@@ -26,6 +26,7 @@ export class UserManagerController{
 
     @MessagePattern({cmd: 'check_user_login'})
     checkUserLogin(@Body() usermail : {mail: string}){
+        console.log(usermail)
         return this.userSerivce.findUserByMail(usermail.mail)
     }
 }

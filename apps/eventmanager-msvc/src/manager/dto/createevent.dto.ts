@@ -4,4 +4,5 @@ export class CreateEventDto{
     description : string 
     latidude : number
     longitude : number
+    userId : number
 }

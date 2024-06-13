@@ -21,8 +21,11 @@ export class AuthService {
 
     async login(userLogin: LoginAuthDto) {
 
+        const userMail = {
+            mail : userLogin.mail
+        }
         const userFound : UserDto = await firstValueFrom(
-            this.userClient.send({ cmd: 'check_user_login' }, userLogin.mail)
+            this.userClient.send({ cmd: 'check_user_login' }, userMail)
         )
         const checkPassword = await compare(userLogin.password, userFound.password)
 

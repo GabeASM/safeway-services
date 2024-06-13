@@ -19,4 +19,7 @@ export class Event {
 
     @Column({ type: 'date', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
+
+    @Column()
+    userId : number;
 }

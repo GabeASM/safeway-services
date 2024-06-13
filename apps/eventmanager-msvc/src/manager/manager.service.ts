@@ -8,17 +8,21 @@ import { UserPosition } from './dto/userposition.dto';
 
 @Injectable()
 export class EventeManagerService {
-
+  
   constructor(@InjectRepository(Event) private readonly eventRepository: Repository<Event>, @Inject('USER_SERVICE') private userClient: ClientProxy) { }
-
+  
   getHello(): string {
     return 'Hello World!';
   }
-
+  
   async createEvent(createEvent: CreateEventDto) {
     const newEvenet = this.eventRepository.create(createEvent)
     const event = await this.eventRepository.save(newEvenet)
     return event
+  }
+  async getUserEventsById(userId: number){
+    const eventsById = await this.eventRepository.find({ where: { userId } });
+    return eventsById;
   }
 
   async getAllEvents() {
