@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/createevent.dto';
@@ -8,11 +8,19 @@ import { UserPosition } from './dto/userposition.dto';
 
 @Injectable()
 export class EventeManagerService {
-  
   constructor(@InjectRepository(Event) private readonly eventRepository: Repository<Event>, @Inject('USER_SERVICE') private userClient: ClientProxy) { }
   
   getHello(): string {
     return 'Hello World!';
+  }
+  
+  async getEventById(id: string) {
+    const event = await this.eventRepository.findOne({where: {id}})
+
+    if(!event) throw new HttpException('EVENT_NOT_FOUND', 404)
+    
+    return event
+
   }
   
   async createEvent(createEvent: CreateEventDto) {

@@ -29,6 +29,15 @@ export class EventController {
     return this.eventService.getAllEvents();
   }
   
+  @MessagePattern({ cmd: 'event_id' })
+  getEventById(@Body() id : string) {
+    return this.eventService.getEventById(id);
+  }
+
+
+
+
+
   @MessagePattern({cmd : 'get_events_by_position'})
   getNearbyEvents(@Body() userPosition : UserPosition){
     return this.eventService.findNearbyEvents2(userPosition)

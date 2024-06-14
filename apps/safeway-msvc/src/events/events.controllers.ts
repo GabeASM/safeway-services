@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Request, Get, Req } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, Get, Req, Param } from '@nestjs/common';
 import { CreateEventDto } from './event.dto';
 import { EventmsvcService } from './events.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -35,6 +35,12 @@ export class EventmsvcController {
     @Get('/saludo-usuarios')
     helloFromUsers() {
         return this.eventmsvc.helloUsers()
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/:eventId')
+    getEventById(@Param('eventId') eventId: string) {
+        return this.eventmsvc.getEventById(eventId)
     }
 
     @Get('/all')

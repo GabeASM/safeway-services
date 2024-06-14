@@ -22,9 +22,13 @@ export class EventmsvcService {
     async hello(){
         return this.eventClient.send({cmd: 'hello-event'}, {})
     }
-
+    
     async helloUsers(){
         return this.eventClient.send({cmd : 'hello-users'}, {})
     }
-
+    
+    async getEventById(eventId: string) {
+        const eventIdNumber = Number(eventId)
+        return this.eventClient.send({cmd : 'event_id'} , eventIdNumber) 
+    }
 }
