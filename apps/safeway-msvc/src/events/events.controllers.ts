@@ -43,6 +43,11 @@ export class EventmsvcController {
         return this.eventmsvc.getEventById(eventId)
     }
 
+    @Get()
+    getAllEvents2() {
+        return this.eventmsvc.getAllEvents()
+    }
+
     @Get('/all')
     getAllEvents() {
         return this.eventmsvc.getAllEvents()
