@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateEventDto } from './event.dto';
+import { CreateEventDto, ReportEventDto } from './event.dto';
 
 
 @Injectable()
@@ -31,4 +31,12 @@ export class EventmsvcService {
         const eventIdNumber = Number(eventId)
         return this.eventClient.send({cmd : 'event_id'} , eventIdNumber) 
     }
+
+    async reportEvent(report: ReportEventDto) {
+        console.log('evento reportado -> ',  report.id)
+        console.log('evento reportado -> ',  report.reason)
+
+        return this.eventClient.send({cmd : 'report_event_by_id' } , report)
+    }
+    
 }

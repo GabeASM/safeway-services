@@ -5,30 +5,34 @@ import { CreateEventDto } from './dto/createevent.dto';
 import { Event } from './event.entity';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserPosition } from './dto/userposition.dto';
+import { EventReportedDto } from './dto/eventreported.dto';
+import { EventReport } from './event.report.entity';
 
 @Injectable()
 export class EventeManagerService {
-  constructor(@InjectRepository(Event) private readonly eventRepository: Repository<Event>, @Inject('USER_SERVICE') private userClient: ClientProxy) { }
-  
+  constructor(@InjectRepository(Event) private readonly eventRepository: Repository<Event>,
+  @InjectRepository(EventReport) private readonly reportRepository: Repository<EventReport>,
+    @Inject('USER_SERVICE') private userClient: ClientProxy) { }
+
   getHello(): string {
     return 'Hello World!';
   }
-  
-  async getEventById(id: string) {
-    const event = await this.eventRepository.findOne({where: {id}})
 
-    if(!event) throw new HttpException('EVENT_NOT_FOUND', 404)
-    
+  async getEventById(id: string) {
+    const event = await this.eventRepository.findOne({ where: { id } })
+
+    if (!event) throw new HttpException('EVENT_NOT_FOUND', 404)
+
     return event
 
   }
-  
+
   async createEvent(createEvent: CreateEventDto) {
     const newEvenet = this.eventRepository.create(createEvent)
     const event = await this.eventRepository.save(newEvenet)
-    return event
+    return event;
   }
-  async getUserEventsById(userId: number){
+  async getUserEventsById(userId: number) {
     const eventsById = await this.eventRepository.find({ where: { userId } });
     return eventsById;
   }
@@ -57,7 +61,21 @@ export class EventeManagerService {
     `, [userPosition.latitude, userPosition.longitude, 50]);
 
     return events;
-}
+  }
 
+  async reportEvent(event: EventReportedDto) {
+    const eventFound = await this.eventRepository.findOne({ where: { id: event.id } })
+    if (!eventFound) throw new HttpException('EVENT_NOT_FOUND', 404)
+    
+    const newEventReported = {
+      originalIdEvent : eventFound.id,
+      reason : event.reason,
+      userIdCreator : eventFound.userId,
+      
+    } 
+    const newReportEventCreated =  this.reportRepository.create(newEventReported);
+    const reportSaved = this.reportRepository.save(newReportEventCreated)
+    return reportSaved;
+  }
 
 }

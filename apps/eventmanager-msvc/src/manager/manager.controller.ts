@@ -3,6 +3,7 @@ import { EventeManagerService } from './manager.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateEventDto } from './dto/createevent.dto';
 import { UserPosition } from './dto/userposition.dto';
+import { EventReportedDto } from './dto/eventreported.dto';
 
 @Controller('events')
 export class EventController {
@@ -23,7 +24,6 @@ export class EventController {
   }
   
   
-  
   @MessagePattern({ cmd: 'get_events' })
   getAllEvents() {
     return this.eventService.getAllEvents();
@@ -34,13 +34,14 @@ export class EventController {
     return this.eventService.getEventById(id);
   }
 
-
-
-
-
   @MessagePattern({cmd : 'get_events_by_position'})
   getNearbyEvents(@Body() userPosition : UserPosition){
     return this.eventService.findNearbyEvents2(userPosition)
+  }
+
+  @MessagePattern({cmd : 'report_event_by_id'})
+  reportEvent(@Body() event : EventReportedDto){
+    return this.eventService.reportEvent(event);
   }
 
   @MessagePattern({ cmd: 'hello-users' })

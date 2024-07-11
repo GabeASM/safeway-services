@@ -6,3 +6,8 @@ export class CreateEventDto{
     longitude : number
     userId : number
 }
+
+export class ReportEventDto{
+    id : string 
+    reason : string 
+}

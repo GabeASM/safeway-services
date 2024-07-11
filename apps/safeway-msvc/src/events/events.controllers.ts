@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseGuards, Request, Get, Req, Param } from '@nestjs/common';
-import { CreateEventDto } from './event.dto';
+import { CreateEventDto, ReportEventDto } from './event.dto';
 import { EventmsvcService } from './events.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CustomRequest } from './interfaces';
@@ -51,6 +51,12 @@ export class EventmsvcController {
     @Get('/all')
     getAllEvents() {
         return this.eventmsvc.getAllEvents()
+    }
+
+    @Post('/report')
+    reportEvent(@Body() report : ReportEventDto){
+        console.log(report)
+        return this.eventmsvc.reportEvent(report);
     }
 
 }
