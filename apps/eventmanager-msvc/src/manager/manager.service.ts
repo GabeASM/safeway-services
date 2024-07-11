@@ -74,7 +74,7 @@ export class EventeManagerService {
       
     } 
     const newReportEventCreated =  this.reportRepository.create(newEventReported);
-    const reportSaved = this.reportRepository.save(newReportEventCreated)
+    const reportSaved = await this.reportRepository.save(newReportEventCreated)
     return reportSaved;
   }
 

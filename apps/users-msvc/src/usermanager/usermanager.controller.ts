@@ -2,6 +2,7 @@ import { Body, Controller } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 import { CreateUser } from "./dto/createuser.dto";
 import { UserService } from "./user.service";
+import { UserReported } from "./dto/reportuser.dto";
 
 @Controller('users')
 export class UserManagerController{ 
@@ -32,6 +33,16 @@ export class UserManagerController{
 
     @MessagePattern({cmd: 'get_user_data_by_username'})
     userDataByUserName(@Body() userData : {username : string}){
+        console.log('estoy en el micro servicio -> ' , userData.username)
         return this.userSerivce.findUserByUserName(userData);
+    }
+    @MessagePattern({cmd: 'get_user_data_by_id'})
+    userDataById(@Body() userByID: { userID: string }){
+        return this.userSerivce.findUserById(userByID);
+    }
+
+    @MessagePattern({cmd: 'report_user'})
+    reportUser(@Body() report : UserReported){
+        return this.userSerivce.reportUser(report);
     }
 }

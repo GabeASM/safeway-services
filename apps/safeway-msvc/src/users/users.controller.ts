@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import { UsermsvcService } from './users.services';
-import { CreateUser, UserData } from './user.dto';
+import { CreateUser, ReportUserDto, UserData } from './user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('usermsvc')
@@ -25,6 +25,18 @@ export class UsermsvcController {
     @UseGuards(JwtAuthGuard)
     @Get('/userData')
     getUserData(@Body() userData : UserData){
+        console.log('user data -> ' , userData.username)
         return this.usermsvc.getuserDataByUserName(userData);
+    }
+
+    @Get('/userData/byid')
+    getUserById(@Body() userByID: { userID: string }){
+        
+        return this.usermsvc.getUserDataById(userByID)
+    }
+
+    @Post('/user/report')
+    reportUserById(@Body() report : ReportUserDto){
+        return this.usermsvc.reportUser(report);
     }
 }

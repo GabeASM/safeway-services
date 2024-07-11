@@ -6,3 +6,8 @@ export class CreateUser {
 export class UserData{ 
     username : string 
 }
+export class ReportUserDto{
+    originalUserID: string
+    username: string
+    reason : string 
+}
