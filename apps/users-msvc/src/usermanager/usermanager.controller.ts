@@ -29,4 +29,9 @@ export class UserManagerController{
         console.log(usermail)
         return this.userSerivce.findUserByMail(usermail.mail)
     }
+
+    @MessagePattern({cmd: 'get_user_data_by_username'})
+    userDataByUserName(@Body() userData : {username : string}){
+        return this.userSerivce.findUserByUserName(userData);
+    }
 }

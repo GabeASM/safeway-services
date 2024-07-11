@@ -3,3 +3,6 @@ export class CreateUser {
     mail: string
     password: string
 }
+export class UserData{ 
+    username : string 
+}

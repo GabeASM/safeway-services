@@ -7,7 +7,7 @@ import { CreateUser } from './dto/createuser.dto';
 @Injectable()
 export class UserService {
 
-    constructor(@InjectRepository(User) private readonly userRepository : Repository<User>){}
+    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
 
     getHello(): string {
         return 'Hello World!';
@@ -19,16 +19,31 @@ export class UserService {
         return userSaved
     }
 
-    async getAllUsers(){
+    async getAllUsers() {
         return this.userRepository.find()
     }
-    async findUserByMail(mail: string){
-     const user = await this.userRepository.findOne({where: {
-        mail 
-     }})
-    
-     if(!user) throw new HttpException('USER_NOT_FOUND' ,404)
- 
-     return user
+    async findUserByMail(mail: string) {
+        const user = await this.userRepository.findOne({
+            where: {
+                mail
+            }
+        })
+        if (!user) throw new HttpException('USER_NOT_FOUND', 404)
+
+        return user
     }
+
+    async findUserByUserName(userData: { username: string; }) {
+        const username = userData.username;
+        const user = await this.userRepository.findOne({
+            where: {
+                username
+            }
+        })
+        console.log('usuario encontrado -> ' + user)
+        if (!user) throw new HttpException('USER_NOT_FOUND', 404)
+        
+        return user;
+    }
+
 }
