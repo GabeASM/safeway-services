@@ -5,6 +5,7 @@ import { CreateEventDto, ReportEventDto } from './event.dto';
 
 @Injectable()
 export class EventmsvcService {
+    
     constructor(@Inject('EVENT_SERVICE') private eventClient: ClientProxy) { }
     
     
@@ -37,6 +38,9 @@ export class EventmsvcService {
         console.log('evento reportado -> ',  report.reason)
 
         return this.eventClient.send({cmd : 'report_event_by_id' } , report)
+    }
+    deleteEvent(idEvent: { id: string; }) {
+        return this.eventClient.send({ cmd: 'delete_event'}, idEvent)
     }
     
 }

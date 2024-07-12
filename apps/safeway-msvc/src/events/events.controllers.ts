@@ -1,8 +1,9 @@
-import { Body, Controller, Post, UseGuards, Request, Get, Req, Param } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, Get, Req, Param, Delete } from '@nestjs/common';
 import { CreateEventDto, ReportEventDto } from './event.dto';
 import { EventmsvcService } from './events.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CustomRequest } from './interfaces';
+import { identity } from 'rxjs';
 
 @Controller('eventmsvc')
 export class EventmsvcController {
@@ -57,6 +58,10 @@ export class EventmsvcController {
     reportEvent(@Body() report : ReportEventDto){
         console.log(report)
         return this.eventmsvc.reportEvent(report);
+    }
+    @Delete('/delete')
+    deleteEvent(@Body() idEvent: {id: string}){
+        return this.eventmsvc.deleteEvent(idEvent);
     }
 
 }

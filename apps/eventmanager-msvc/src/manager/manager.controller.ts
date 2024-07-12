@@ -48,4 +48,9 @@ export class EventController {
   getHelloFromUsers() {
     return this.eventService.helloFromUsers();
   }
+
+  @MessagePattern({cmd: 'delete_event'})
+  deleteEventById(@Body() idEvent: {id: string}) {
+    return this.eventService.deleteEventById(idEvent)
+  }
 }

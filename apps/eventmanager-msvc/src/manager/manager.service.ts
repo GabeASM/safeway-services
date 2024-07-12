@@ -10,6 +10,7 @@ import { EventReport } from './event.report.entity';
 
 @Injectable()
 export class EventeManagerService {
+  
   constructor(@InjectRepository(Event) private readonly eventRepository: Repository<Event>,
   @InjectRepository(EventReport) private readonly reportRepository: Repository<EventReport>,
     @Inject('USER_SERVICE') private userClient: ClientProxy) { }
@@ -42,6 +43,14 @@ export class EventeManagerService {
   }
   async helloFromUsers() {
     return this.userClient.send({ cmd: 'hello' }, {})
+  }
+
+  async deleteEventById(idEvent: { id: string; }) {
+    const eventFound = await this.eventRepository.findOne({where: { id: idEvent.id}})
+    if (!eventFound) throw new HttpException('EVENT_NOT_FOUND', 404)
+      const id = eventFound.id
+      const eventDelete = await this.eventRepository.delete({id})
+      return eventDelete
   }
 
   async findNearbyEvents2(userPosition: UserPosition) {
