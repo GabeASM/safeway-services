@@ -17,6 +17,15 @@ import { JwtStrategy } from './jwt.strategy';
                     port: 3001
                 }
 
+            },
+            {
+                name: 'ADMIN_SERVICE',
+                transport: Transport.TCP,
+                options: {
+                    host: 'admins',
+                    port: 3003
+                }
+
             }
         ]),
         JwtModule.register({

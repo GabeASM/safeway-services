@@ -2,14 +2,17 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RegisterAuthDto } from './dto/register.dto';
 import { hash, compare } from 'bcrypt'
-import { LoginAuthDto } from './dto/login.dto';
+import { LoginAdminDto, LoginAuthDto } from './dto/login.dto';
 import { firstValueFrom } from 'rxjs';
 import { UserDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { AdminDto } from './dto/admin.dto';
+
 @Injectable()
 export class AuthService {
     
-    constructor(@Inject('USER_SERVICE') private userClient: ClientProxy, private jwtAuthService : JwtService) { }
+    
+    constructor(@Inject('USER_SERVICE') private userClient: ClientProxy, private jwtAuthService : JwtService, @Inject('ADMIN_SERVICE') private adminClient: ClientProxy) { }
     
     async register(userRegister: RegisterAuthDto) {
         const password = userRegister.password
@@ -42,5 +45,26 @@ export class AuthService {
             }
             
             return data
+        }
+        async loginAdmin(adminObjectLogin: LoginAdminDto) {
+            const adminMail = {
+                mail: adminObjectLogin.mail
+            }
+            const adminFound : AdminDto = await firstValueFrom(
+                this.adminClient.send({ cmd: 'get_admin'}, adminMail)
+            )
+            if(adminFound.password == adminObjectLogin.password){
+                const payload = {id: adminFound.id, mail: adminFound.mail}
+
+                const token = this.jwtAuthService.sign(payload)
+
+                const data = {
+                    admin: adminFound,
+                    token
+                }
+
+                return data
+            }
+            throw new HttpException('PASSWORD_INCORRECT', 403)
         }
     }
